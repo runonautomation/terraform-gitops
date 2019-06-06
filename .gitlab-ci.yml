@@ -28,7 +28,7 @@ plan:
     - validate
   artifacts:
     paths:
-      - production/networking/kubecluster_a.tfplan
+      - production/networking/networking.tfplan
       - production/kubecluster_a/kubecluster_a.tfplan
 
 apply:
