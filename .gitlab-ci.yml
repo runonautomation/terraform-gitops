@@ -1,0 +1,42 @@
+image:
+  name: hashicorp/terraform:latest
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+stages:
+  - validate
+  - plan
+  - apply
+
+before_script:
+  - echo $GOOGLE_APPLICATION_CREDENTIALS_BASE64 | base64 -d > $GOOGLE_APPLICATION_CREDENTIALS
+  - ./scripts/tf_create_backends.sh
+  - ./scripts/tf_action_all.sh get
+  - ./scripts/tf_action_all.sh init
+
+validate:
+  stage: validate
+  script:
+  - ./scripts/tf_action_all.sh validate
+
+plan:
+  stage: plan
+  script:
+    - ./scripts/tf_action_all.sh plan
+  dependencies:
+    - validate
+  artifacts:
+    paths:
+      - production/networking/kubecluster_a.tfplan
+      - production/kubecluster_a/kubecluster_a.tfplan
+
+apply:
+  stage: apply
+  script:
+    - ./scripts/tf_action_all.sh apply
+  dependencies:
+    - plan
+  when: manual
+  only:
+  - master
