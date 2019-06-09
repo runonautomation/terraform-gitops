@@ -34,9 +34,3 @@ resource "google_compute_subnetwork" "subnet_a1" {
   }
   private_ip_google_access = "true"
 }
-
-resource "google_storage_bucket" "testgitops" {
-  name          = "testgitops0123445677"
-  location      = "EU"
-  project       = "${local.project}"
-}
