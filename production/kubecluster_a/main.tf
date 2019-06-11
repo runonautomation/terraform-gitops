@@ -12,7 +12,7 @@ locals {
 }
 
 module "kubecluster_a" {
-  source         = "github.com/runonautomation/gke-private"
+  source         = "github.com/runonautomation/terraform-google-gke-private"
   name           = "${local.name}"
   network        = "${local.network}"
   subnetwork     = "${local.subnetwork}"
