@@ -21,4 +21,7 @@ module "kubecluster_a" {
   node_locations = "${local.node_locations}"
   cluster_range  = "${local.cluster_range}"
   services_range = "${local.services_range}"
+  manc           = {
+    "World" : "0.0.0.0/0"
+  }
 }
